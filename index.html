@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <title>移动端调用键盘输入</title>
+    <style>
+        body{
+            margin:20px;
+        }
+        h3{
+            line-height: 2;
+        }
+        .hide-input{
+            position: absolute;
+            left: -9999em;
+            top:0;
+        }
+        .hide-input input{
+            width: 80%;
+            height: 36px;
+            line-height: 36px;
+            border:1px solid #ccc;
+        }
+        .key span{
+            float:left;
+            margin-right: 20px;
+            width: 60px;
+            height: 60px;
+            line-height: 60px;
+            font-size: 30px;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+        .key span.active{
+            border-color:red;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="main">
+    <h3>请输入验证码：</h3>
+    <div class="key">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <div class="hide-input">
+        <input type="password" maxlength="4"/>
+    </div>
+</div>
+<script src="js/jquery-1.11.3.min.js"></script>
+<script>
+
+    $(function (){
+
+        var panel = $('.key span');
+
+        // 点击span的时候让input获取焦点
+        panel.on('click', function(){
+
+            panel.eq(0).addClass('active');
+            
+            $('input').focus();
+            
+        });
+
+        // 监听input value的变化
+        $('input').on('input', function(){
+            var arr = [];
+            var valueLength = $('input').val().length;
+            var value = $('input').val();
+
+            // span加active
+            panel.removeClass().eq(valueLength).addClass('active').html('');
+
+            arr = value.split('');
+            console.log(arr);
+
+            for(var i in arr){
+                panel.eq(i).html(arr[i]);
+            }
+            
+        })
+    })
+</script>
+
+</body>
+</html>
